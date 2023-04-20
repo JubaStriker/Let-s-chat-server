@@ -4,6 +4,7 @@ require('dotenv').config();
 const connectDB = require("../config/db");
 const colors = require('colors');
 const userRoutes = require('../Routes/userRoutes')
+const { notFound, errorHandler } = require('../middlewares/errormiddleware');
 
 
 connectDB();
@@ -23,6 +24,9 @@ app.get('/chats', async (req, res) => {
 })
 
 app.use('/api/user', userRoutes)
+
+app.use(notFound)
+app.use(errorHandler)
 
 app.get('/', async (req, res) => {
     res.send("let's chat server is running");
